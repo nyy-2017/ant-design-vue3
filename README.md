@@ -1,9 +1,57 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# 项目搭建过程
+1. 
+2. 
+3. 
+4. 
 
-## Recommended Setup
+10. # vite-vue3项目使用@别名和自定义端口号以及解决跨域
+# 自定义端口号
+server: {
+    port: 3000, // 自定义端口号
+}
 
-- [VS Code](https://code.visualstudio.com/) + [Vue - Official](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (previously Volar) and disable Vetur
+# @别名
+// 导入path
+import path from 'path'
+resolve: {
+    // 配置路径别名， @就代表当前项目的绝对路径 
+    // __dirname是一个全局变量，表示当前模块所属目录的绝对路径
+    // path.resolve返回一个以相对于当前的工作目录（working directory）的绝对路径, 
+    // 比如当前工作目录为 D:\205\wms-web 那么 @ 就代表 D:\205\wms-web\src
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    }
+},
+# @别名爆红解决
+如果提示有标红波浪,在tsconfig.json 添加如下代码.
+"baseUrl": ".",
+"paths": {
+    "@/*": ["src/*"]
+}
 
-- Use [vue-tsc](https://github.com/vuejs/language-tools/tree/master/packages/tsc) for performing the same type checking from the command line, or for generating d.ts files for SFCs.
+
+# 修改vite.config.js文件，安装path模块，添加@别名
+1. 安装命令：npm install --save-dev @types/node
+2. 配置文件：
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import path from 'path'   // 需安装此模块
+ 
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src')
+    }
+  }
+})
+
+Menu 导航菜单  https://next.antdv.com/components/menu-cn
+
+//ant design vue中menu组件递归渲染报错解决  https://blog.csdn.net/weixin_42681295/article/details/125503518
+// ant-design-vue 递归菜单+只打开一个菜单 https://blog.csdn.net/qq873113580/article/details/122743379?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-122743379-blog-107593936.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-122743379-blog-107593936.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=14
+
+// 使用vue-antDesign menu 页面(添加面包屑跳转) https://blog.csdn.net/hjy170314/article/details/108103706?spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=22
