@@ -95,9 +95,9 @@ const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
 };
 const toReg = () => {
-    router.push({ path: '/userReg' }).catch(() => {})
+    // router.push({ path: '/userReg' }).catch(() => {})
 }
-onMounted(()=>{
+onMounted(() => {
     resetImg()
 })
 // 点击图片更换验证码

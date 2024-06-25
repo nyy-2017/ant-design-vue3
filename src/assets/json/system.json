@@ -1,0 +1,424 @@
+{
+    "router": [
+        {
+            "id": 4,
+            "parentId": 0,
+            "menuType": "1",
+            "name": "C3模块管理",
+            "icon": "iconfont icon-jiankongmokuaiguanli",
+            "path": "/newReport",
+            "component": "home/index",
+            "redirect": "/newReport",
+            "meta": {
+                "keepAlive": false,
+                "title": "C3模块管理",
+                "requireAuth": true,
+                "roles": []
+            },
+            "children": [
+                {
+                    "id": 5,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "待审核分析报告",
+                    "hidden": true,
+                    "icon": "iconfont icon-Audit-report",
+                    "path": "/c3analysis",
+                    "component": "C3Module/c3analysis",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "待审核分析报告",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 6,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "新版待审核分析报告",
+                    "icon": "iconfont icon-daishenhebaogao",
+                    "path": "/newReport",
+                    "component": "C3Module/newReport",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "新版待审核分析报告",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 7,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "C3配置数据",
+                    "icon": "iconfont icon-peizhishujuyuan",
+                    "path": "/c3configure",
+                    "component": "C3Module/c3configure",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "C3配置数据",
+                        "requireAuth": true,
+                        "roles": []
+                    }   
+                },
+                {
+                    "id": 8,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "已审核分析报告",
+                    "icon": "iconfont icon-yishenhe",
+                    "path": "/c3library",
+                    "component": "C3Module/c3library",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "已审核分析报告",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 9,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "典型案例库",
+                    "icon": "iconfont icon-dianxinganliku",
+                    "path": "/c3caseLibrary",
+                    "component": "C3Module/c3caseLibrary",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "典型案例库",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 10,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "分析报告模板下载",
+                    "icon": "iconfont icon-mobanxiazai1",
+                    "path": "/standardTemplate",
+                    "component": "C3Module/standardTemplate",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "分析报告模板下载",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 38,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "多文件上传",
+                    "icon": "iconfont icon-mobanxiazai1",
+                    "path": "/uploadfiles",
+                    "component": "C3Module/uploadfiles",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "多文件上传",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 39,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "批量上传",
+                    "icon": "iconfont icon-mobanxiazai1",
+                    "path": "/moreUploadfiles",
+                    "component": "Upload/moreUploadfiles",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "批量上传",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 40,
+                    "parentId": 4,
+                    "menuType": "2",
+                    "name": "el-input输入框限制",
+                    "icon": "iconfont icon-mobanxiazai1",
+                    "path": "/elInputLimit",
+                    "component": "Upload/elInputLimit",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "el-input输入框限制",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "parentId": 0,
+            "menuType": "1",
+            "name": "权限管理",
+            "icon": "iconfont icon-quanxianguanli",
+            "path": "/organ",
+            "component": "home/index",
+            "redirect": "/organ",
+            "meta": {
+                "keepAlive": false,
+                "title": "权限管理",
+                "requireAuth": true,
+                "roles": []
+            },
+            "children": [
+                {
+                    "id": 12,
+                    "parentId": 11,
+                    "menuType": "2",
+                    "name": "机构信息",
+                    "icon": "iconfont icon-jigouxinxi",
+                    "path": "/organ",
+                    "component": "authorization/organ",
+                    "meta": {
+                        "keepAlive": true,
+                        "title": "机构信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 13,
+                    "parentId": 11,
+                    "menuType": "2",
+                    "name": "角色信息",
+                    "icon": "iconfont icon-jiaosexinxi",
+                    "path": "/role",
+                    "component": "authorization/role",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "角色信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 14,
+                    "parentId": 11,
+                    "menuType": "2",
+                    "name": "用户信息",
+                    "icon": "iconfont icon-yonghuxinxi",
+                    "path": "/user",
+                    "component": "authorization/user",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "用户信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 15,
+                    "parentId": 11,
+                    "menuType": "2",
+                    "name": "菜单信息",
+                    "icon": "iconfont icon-caidanxinxi",
+                    "path": "/menu",
+                    "component": "authorization/menu",
+                    "meta": {
+                        "keepAlive": true,
+                        "title": "菜单信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 16,
+                    "parentId": 11,
+                    "menuType": "2",
+                    "name": "个人设置",
+                    "icon": "iconfont icon-gerenshezhi",
+                    "path": "/person",
+                    "component": "profile/person",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "个人设置",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "parentId": 0,
+            "menuType": "1",
+            "name": "公用数据管理",
+            "icon": "iconfont icon-a-bianzu2",
+            "path": "/bureau",
+            "component": "home/index",
+            "redirect": "/bureau",
+            "meta": {
+                "keepAlive": false,
+                "title": "公用数据管理",
+                "requireAuth": true,
+                "roles": []
+            },
+            "children": [
+                {
+                    "id": 22,
+                    "parentId": 21,
+                    "menuType": "2",
+                    "name": "路局信息",
+                    "icon": "iconfont icon-luju",
+                    "path": "/bureau",
+                    "component": "publicInfo/bureau",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "路局信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 23,
+                    "parentId": 21,
+                    "menuType": "2",
+                    "name": "全国线路信息",
+                    "icon": "iconfont icon-xianluxinxi2",
+                    "path": "/nationalLine",
+                    "component": "publicInfo/nationalLine",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "全国线路信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 36,
+                    "parentId": 21,
+                    "menuType": "2",
+                    "name": "路局线路信息",
+                    "icon": "iconfont icon-xianluxinxi2",
+                    "path": "/subLine",
+                    "component": "publicInfo/subLine",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "路局线路信息",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 37,
+                    "parentId": 21,
+                    "menuType": "2",
+                    "name": "导入详情",
+                    "icon": "iconfont icon-daoruxiangqing",
+                    "path": "/importMsg",
+                    "hidden": true,
+                    "component": "publicInfo/components/importMsg",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "导入详情",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 25,
+                    "parentId": 21,
+                    "menuType": "2",
+                    "name": "el-Table",
+                    "icon": "el-icon-set-up",
+                    "path": "/myVlTable",
+                    "component": "publicInfo/myVlTable",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "el-Table",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": 31,
+            "parentId": 0,
+            "menuType": "1",
+            "name": "统计模块管理",
+            "icon": "iconfont icon-tongjimokuaiguanli",
+            "path": "/overtime",
+            "component": "home/index",
+            "redirect": "/overtime",
+            "meta": {
+                "keepAlive": false,
+                "title": "统计模块管理",
+                "requireAuth": true,
+                "roles": []
+            }, 
+            "children": [
+                {
+                    "id": 32,
+                    "parentId": 31,
+                    "menuType": "2",
+                    "name": "超时概况",
+                    "icon": "iconfont icon-chaoshi",
+                    "path": "/overtime",
+                    "component": "statisticsModule/overtime",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "超时概况",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 33,
+                    "parentId": 31,
+                    "menuType": "2",
+                    "name": "分类说明",
+                    "icon": "iconfont icon-fenlei",
+                    "path": "/classify",
+                    "component": "statisticsModule/classify",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "分类说明",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 34,
+                    "parentId": 31,
+                    "menuType": "2",
+                    "name": "按月对比",
+                    "icon": "iconfont icon-anyue",
+                    "path": "/monthly",
+                    "component": "statisticsModule/monthly",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "按月对比",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                },
+                {
+                    "id": 35,
+                    "parentId": 31,
+                    "menuType": "2",
+                    "name": "审批统计",
+                    "icon": "iconfont icon-shenpitongji",
+                    "path": "/auditStatistics",
+                    "component": "statisticsModule/auditStatistics",
+                    "meta": {
+                        "keepAlive": false,
+                        "title": "审批统计",
+                        "requireAuth": true,
+                        "roles": []
+                    }
+                }
+            ] 
+        }
+    ],
+    "message": []
+}
