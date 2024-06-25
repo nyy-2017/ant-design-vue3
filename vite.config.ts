@@ -7,7 +7,9 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],
   server: {
+    host: "0.0.0.0",
     port: 3000, // 自定义端口号
+    open: true, // 服务启动时是否自动打开浏览器
     proxy: {
       // 选项写法
       '/api': {
