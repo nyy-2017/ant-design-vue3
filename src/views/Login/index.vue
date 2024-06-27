@@ -27,12 +27,8 @@
             </a-row>
         </a-form-item>
 
-        <a-form-item name="remember" :wrapper-col="{ offset: 8, span: 16 }">
-            <a-checkbox v-model:checked="formState.remember">记住我</a-checkbox>
-            <a-button type="link" @click="toReg">还没有账号？去注册</a-button>
-        </a-form-item>
-        <a-form-item :wrapper-col="{ offset: 8, span: 16 }">
-            <a-button type="primary" html-type="submit">登录</a-button>
+        <a-form-item :wrapper-col="{ offset: 6, span: 24 }">
+            <a-button type="primary" style="width: 100%;" html-type="submit">登录</a-button>
         </a-form-item>
         <!--加载效果-->
         <a-spin tip="Logining..." :spinning="spinning"></a-spin>
@@ -44,7 +40,7 @@ import { message } from 'ant-design-vue';
 import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import { useStore } from 'vuex'
-import { getMapping, postMapping } from "../api/request";
+import { getMapping, postMapping } from "@/api/request";
 const store = useStore()
 // 在某个函数中触发action
 // console.log('store:', store)
@@ -54,7 +50,6 @@ const router = useRouter()
 interface FormState {
     username: string;
     password: string;
-    remember: boolean;
     randomKey: Number;
     code: string;
 }
@@ -62,7 +57,6 @@ const spinning = ref(false)
 const formState = reactive<FormState>({
     username: '',
     password: '',
-    remember: true,
     randomKey: Math.floor(Math.random() * 4000 + 1000),
     code: ''
 });
@@ -83,7 +77,7 @@ const handleLogin = () => {
             message.success('登录成功');
             spinning.value = !spinning.value
             store.dispatch("user/userLogin", data).then(() =>{
-                router.push({ path: '/home' }).catch(() => {})
+                router.push({ path: '/' }).catch(() => {})
             }).catch(() =>{
             })
         } else {
@@ -94,12 +88,9 @@ const handleLogin = () => {
 const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
 };
-const toReg = () => {
-    // router.push({ path: '/userReg' }).catch(() => {})
-}
 onMounted(() => {
     resetImg()
-})
+});
 // 点击图片更换验证码
 async function resetImg() {
     const _code = {

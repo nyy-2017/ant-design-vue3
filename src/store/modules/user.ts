@@ -1,6 +1,7 @@
 // state数据初始化
 const getDefaultState = () => {
     return {
+        logoTitle: '六捷C3超时管理系统',
         token: '',        
         c3UserGroups: [],          
         roles: [],            

@@ -4,7 +4,7 @@
 1. 
 2. 
 3. 
-4.安装less  npm install -D less
+4. 安装less  npm install -D less
 5. vite 不支持require的用法， webpack是支持的,  
 安装转换插件: npm i vite-plugin-require-transform --save-dev
 import requireTransform from 'vite-plugin-require-transform';
@@ -15,7 +15,7 @@ plugins: [
 	    fileRegex: /.js$|.jsx$ | .vue$/ ,
 	}),
 ],
-
+6. npm install nprogress --save
 
 10. # vite-vue3项目使用@别名和自定义端口号以及解决跨域
 # 自定义端口号

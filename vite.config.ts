@@ -4,6 +4,10 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 const resolve = (dir: string) => path.resolve(__dirname, dir)
 
+// 引入 Unocss 样式插件
+import Unocss from 'unocss/vite';
+import { presetAttributify, presetUno, presetIcons } from 'unocss';
+
 // 引入
 import requireTransform from 'vite-plugin-require-transform';
 
@@ -11,6 +15,9 @@ import requireTransform from 'vite-plugin-require-transform';
 export default defineConfig({
   plugins: [
     vue(),
+    Unocss({
+      presets: [presetUno(), presetAttributify(), presetIcons()],
+    }),
     // passing string type Regular expression
     requireTransform({
       fileRegex:/.js$|.jsx$|.json$|.vue$/
@@ -43,6 +50,13 @@ export default defineConfig({
       // proxy 是 'http-proxy' 的实例 }
     }*/
     }
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: `@use "@/styles/mixins.scss" as *;`,
+      },
+    },
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],
