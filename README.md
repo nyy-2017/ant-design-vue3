@@ -17,6 +17,21 @@ plugins: [
 ],
 6. npm install nprogress --save
 
+7. npm i @vueuse/core  实现全屏功能
+<div ref="el">
+<div @click="toggle">
+      <van-icon :name="!isFullscreen ? 'enlarge' : 'shrink'" color="red" size="40"/>
+    </div>
+</div>
+<script setup>
+import { ref } from 'vue';
+import { useFullscreen } from '@vueuse/core';
+const el = ref()
+const { isFullscreen, toggle } = useFullscreen(el)
+</script>
+
+
+
 10. # vite-vue3项目使用@别名和自定义端口号以及解决跨域
 # 自定义端口号
 server: {

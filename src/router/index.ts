@@ -27,8 +27,14 @@ const routes: Array<RouteRecordRaw> = [
         path: "/",
         name: 'layout',
         component: Layout,
-        redirect: '/newReport',
+        redirect: '/home',
         children: [
+            {
+                path: '/home',
+                name: 'home',
+                meta: { title: '首页', icon: 'shujuzhexiantu' },
+                component: () => import('@/views/home/index.vue'),
+            },
             {
                 path: "/C3Module",
                 name: 'C3模块管理',

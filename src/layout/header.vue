@@ -6,7 +6,7 @@
         @click="emits('update:isCollapse', !isCollapse)"
         >
         <i class="iconfont icon-menu-fold-outlined" v-if="!isCollapse"></i>
-        <i class="iconfont icon-MenuUnfoldOutlined" v-else></i>
+        <i class="iconfont icon-MenuUnfoldOutlined" ></i>
       </span>
       <!-- <i-ep:fold v-if="!isCollapse" />
       <i-ep:expand v-else /> -->
@@ -25,6 +25,16 @@
       </a-breadcrumb>
     </div>
     
+
+      <!-- 全屏 -->
+      <span ref="el" class="svgIcons" @click="toggle">
+        <a-tooltip class="item" :title="!isFullScreen ? '全屏':'退出全屏'" placement="bottom">
+          <i :class="!isFullScreen ? 'iconfont icon-quanping1':'iconfont icon-quanping2'" 
+            style="font-size:22px"></i>
+        </a-tooltip>
+      </span>
+
+ 
     <!-- 退出登录 -->
     <div class="flex justify-center items-center">
       <a-dropdown>
@@ -47,7 +57,15 @@
   </div>
 </template>
 
+<script lang="ts">
+import { useFullscreen } from '@vueuse/core';
+const el = ref<HTMLElement>();
+const { isFullscreen, toggle, enter, exit } = useFullscreen(el);
+</script>
+
+
 <script setup lang="ts">
+
 import { MenuProps } from 'ant-design-vue/es';
 import { useRoute, useRouter } from "vue-router";
 import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect } from 'vue';
@@ -60,7 +78,6 @@ computed(() => {
   const { user } = store.state
   console.log('user:', user)
 })
-
 
 
 defineProps<{ isCollapse?: boolean }>();
