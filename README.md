@@ -2,8 +2,40 @@
 
 # 项目搭建过程
 1. 
-2. 
-3. 
+2. 安装了crypto-js模块
+npm install crypto-js
+
+
+3. 安装使用pinia 以及pinia的持久化
+npm install pinia
+store/index.ts文件
+import { createPinia } from "pinia";
+ 
+// 创建
+const pinia = createPinia();
+ 
+// 导出
+export default pinia;
+
+pinia的持久化依赖： 
+npm i pinia-plugin-persistedstate
+
+import { createPinia } from "pinia";
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate' //引入持久化插件
+// 创建
+const pinia = createPinia();
+ 
+// 使用插件
+pinia.use(piniaPluginPersistedstate);
+ 
+// 导出
+export default pinia;
+
+
+
+
+
+
 4. 安装less  npm install -D less
 5. vite 不支持require的用法， webpack是支持的,  
 安装转换插件: npm i vite-plugin-require-transform --save-dev
@@ -81,3 +113,6 @@ Menu 导航菜单  https://next.antdv.com/components/menu-cn
 // ant-design-vue 递归菜单+只打开一个菜单 https://blog.csdn.net/qq873113580/article/details/122743379?spm=1001.2101.3001.6650.7&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-122743379-blog-107593936.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-7-122743379-blog-107593936.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=14
 
 // 使用vue-antDesign menu 页面(添加面包屑跳转) https://blog.csdn.net/hjy170314/article/details/108103706?spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=22
+
+
+

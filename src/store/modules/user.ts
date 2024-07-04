@@ -1,8 +1,8 @@
 // state数据初始化
 const getDefaultState = () => {
     return {
-        logoTitle: '六捷C3超时管理系统',
-        token: '',        
+        token: sessionStorage.getItem('token'), 
+        reftoken: sessionStorage.getItem('reftoken'),       
         c3UserGroups: [],          
         roles: [],            
         nickName: '',
@@ -42,6 +42,10 @@ const actions = {
         // 获取数据, 更新state中的数据
         commit('setToken', resultData.Authorization)
         sessionStorage.setItem('token', resultData.Authorization)
+
+        commit('reftoken', resultData.reftoken)
+        sessionStorage.setItem('reftoken', resultData.reftoken)
+        
         commit('setUserId', resultData.loginUserInfo.user.dataNum)
         commit('setNickName', resultData.loginUserInfo.user.nickName)
         commit('setUsername', resultData.loginUserInfo.user.username)

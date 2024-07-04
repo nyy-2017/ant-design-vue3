@@ -41,9 +41,9 @@ import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
 import { useRouter } from "vue-router";
 import { useStore } from 'vuex'
 import { getMapping, postMapping } from "@/api/request";
-const store = useStore()
+// const store = useStore()
 // 在某个函数中触发action
-// console.log('store:', store)
+console.log('store:', useStore())
 
 const codeImgUrl= ref<string>('')
 const router = useRouter()
@@ -70,7 +70,7 @@ const handleLogin = () => {
         mode: 'none', // 不要默认的错误提示
     }
     // post请求
-    postMapping("http://172.16.2.195:8101/api/login", userInfo).then((res) => {
+    postMapping("/api/login", userInfo).then((res) => {
         const { code, data } = res.data
         // console.log("code", code, data)
         if (0 == code) {
@@ -97,7 +97,7 @@ async function resetImg() {
         randomKey: formState.randomKey
     }
     // 回调接口
-    await getMapping('http://172.16.2.195:8101/api/open/code', _code, 'blob').then((res) => {
+    await getMapping('/api/open/code', _code, 'blob').then((res) => {
         if (res.status == 200) {
             codeImgUrl.value = window.URL.createObjectURL(res.data)
         }

@@ -81,7 +81,7 @@ onMounted(() => {
 })
 //获取用户列表
 const getListUser = () => {
-    getMapping("http://172.16.2.195:8101/api/system/user/list", null).then((res) => {
+    getMapping("/api/system/user/list", null).then((res) => {
         const { result } = res.data
         console.log('请求结果：', result)
         data.value = result

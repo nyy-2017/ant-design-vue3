@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+
 // 导入path
 import path from 'path'
 const resolve = (dir: string) => path.resolve(__dirname, dir)
@@ -33,22 +34,15 @@ export default defineConfig({
       '/api': {
         target: 'http://172.16.2.195:8101',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
-    /*,
-    // 正则表达式写法
-    '^/fallback/.*': {
-        target: 'http://jsonplaceholder.typicode.com',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/fallback/, '')
+        ws: true,
+        // rewrite: (path) => path.replace(/^\//, '')
       },
-      // 使用 proxy 实例
-    '/api': {
-      target: 'http://jsonplaceholder.typicode.com',
-      changeOrigin: true,
-      configure: (proxy, options) => {
-      // proxy 是 'http-proxy' 的实例 }
-    }*/
+      '/event_api': {
+        target: 'http://10.110.6.126:3300',
+        changeOrigin: true,
+        ws: true,
+        // rewrite: (path) => path.replace(/^\//, '')
+      }
     }
   },
   css: {
@@ -56,7 +50,7 @@ export default defineConfig({
       scss: {
         additionalData: `@use "@/styles/mixins.scss" as *;`,
       },
-    },
+    }
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.vue'],

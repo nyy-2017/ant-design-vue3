@@ -1,6 +1,6 @@
 <template>
   <div class="header-container h-100%">
-    <div class="flex justify-center items-center">
+    <div class="flex justify-center items-center" style="min-width: 100px;">
       <span
         class="cursor-pointer mr-14px text-20px flex justify-center items-center"
         @click="emits('update:isCollapse', !isCollapse)"
@@ -24,24 +24,38 @@
         </template>
       </a-breadcrumb>
     </div>
-    
-
+    <!-- 右侧部分内容 -->
+    <div class="flex justify-center items-center">
+      <!-- 新版旧版 审核分析报告 -->
+      <span class="report_css">
+        <a-tooltip class="item" v-if="activePath === '/c3analysis'" title="新版待审核分析报告" placement="bottom">
+          <i class="iconfont icon-fenxibaogao" style="font-size:18px;" @click="newReporRouter(activePath)">
+            <span> 切换新版 </span>
+          </i>
+        </a-tooltip>
+  
+        <a-tooltip class="item" v-else-if="activePath === '/newReport'" title="旧版待审核分析报告" placement="bottom">
+          <i class="iconfont icon-fenxibaogao1" style="font-size:18px" @click="newReporRouter(activePath)">
+            <span> 切换旧版 </span>
+          </i>
+        </a-tooltip>
+      </span>
       <!-- 全屏 -->
-      <span ref="el" class="svgIcons" @click="toggle">
+      <span @click="toggleFullScreen" class="fullScreen_css">
         <a-tooltip class="item" :title="!isFullScreen ? '全屏':'退出全屏'" placement="bottom">
-          <i :class="!isFullScreen ? 'iconfont icon-quanping1':'iconfont icon-quanping2'" 
+          <i :class="!isFullScreen ? 'iconfont icon-quanping2':'iconfont icon-quanping1'" 
             style="font-size:22px"></i>
         </a-tooltip>
       </span>
-
- 
-    <!-- 退出登录 -->
-    <div class="flex justify-center items-center">
+      <!-- 退出登录 -->
       <a-dropdown>
         <span class="flex justify-center items-center outline-none">
           <img src="@/assets/images/header.png" class="w-40px h-40px b-rd-50%" />
           <!-- <span class="ml-4px">{{ userInfo.username }}</span> -->
-          <span class="ml-4px"> admin </span>
+          <span class="ml-4px" style="font-size:18px"> 
+            管理员123
+            <DownOutlined />
+          </span>
         </span>
         <template #overlay>
           <a-menu @click="handleLogout">
@@ -57,28 +71,37 @@
   </div>
 </template>
 
-<script lang="ts">
-import { useFullscreen } from '@vueuse/core';
-const el = ref<HTMLElement>();
-const { isFullscreen, toggle, enter, exit } = useFullscreen(el);
-</script>
-
-
 <script setup lang="ts">
-
 import { MenuProps } from 'ant-design-vue/es';
+import { DownOutlined } from '@ant-design/icons-vue';
 import { useRoute, useRouter } from "vue-router";
-import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect } from 'vue';
+import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect, watch } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
-
-
 console.log('useUserStore:', store)
 computed(() => {
   const { user } = store.state
   console.log('user:', user)
 })
+const activePath = ref(''); // header 新旧版路由切换变量
 
+// 退出全屏方法
+const isFullScreen = ref(false);
+const toggleFullScreen = () => {
+  if (!document.fullscreenElement && !isFullScreen.value) {
+    // 进入全屏
+    document.documentElement.requestFullscreen().then(() => {
+      isFullScreen.value = true;
+    });
+  } else {
+    // 退出全屏
+    if (document.exitFullscreen) {
+      document.exitFullscreen().then(() => {
+        isFullScreen.value = false;
+      });
+    }
+  }
+};
 
 defineProps<{ isCollapse?: boolean }>();
 const emits = defineEmits(['update:isCollapse']);
@@ -133,10 +156,38 @@ const handleLogout: MenuProps['onClick'] = ({ key }) => {
     }).catch(() =>{})
   }
 };
+
+
+
+// 监听路由方法
+watch(() => router.currentRoute.value, (newValue: any) => {
+    // console.log('newValue：', newValue, window.location.pathname)
+    activePath.value = window.location.pathname
+  },
+  { immediate: true }
+);
+
+// 新旧版本的分析报告 路由切换
+const newReporRouter = (item: string) => {
+  // console.log('item:', item)
+  if (item === '/c3analysis') {
+    router.push("/newReport")
+  } else if (item === '/newReport') {
+    router.push("/c3analysis")
+  }
+};
+
+
 </script>
 
 <style lang="scss" scoped>
 .header-container {
   @include flex(center, space-between);
+}
+.report_css {
+  margin-right: 20px;
+}
+.fullScreen_css {
+  margin-right: 15px;
 }
 </style>
