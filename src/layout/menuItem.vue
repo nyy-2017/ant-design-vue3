@@ -35,6 +35,8 @@
 </template>
 
 <script setup lang="ts">
+import { RouteRecordRaw } from 'vue-router';
+
 defineOptions({
   name: 'menuItem',
 });

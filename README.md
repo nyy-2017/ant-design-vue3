@@ -1,7 +1,15 @@
 # Vue 3 + TypeScript + Vite
 
 # 项目搭建过程
-1. 
+
+npm i --save-dev @types/nprogress
+npm i --save-dev @types/crypto-js
+npm i --save-dev @types/lodash-es
+
+1. import qs from 'qs' 正确安装方法
+npm install @types/qs --save-dev
+
+
 2. 安装了crypto-js模块
 npm install crypto-js
 
@@ -30,10 +38,6 @@ pinia.use(piniaPluginPersistedstate);
  
 // 导出
 export default pinia;
-
-
-
-
 
 
 4. 安装less  npm install -D less
@@ -67,7 +71,7 @@ const { isFullscreen, toggle } = useFullscreen(el)
 10. # vite-vue3项目使用@别名和自定义端口号以及解决跨域
 # 自定义端口号
 server: {
-    port: 3000, // 自定义端口号
+  port: 3000, // 自定义端口号
 }
 
 # @别名

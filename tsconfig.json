@@ -1,11 +1,21 @@
 {
   "compilerOptions": {
+    // 不想关闭noImplicitAny规则，还可以使用类型断言来明确指定类型
+    "noImplicitAny": false,
     "target": "ES2020",
     "useDefineForClassFields": true,
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
-
+    // 路径别名
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"],  // 这里需要配置
+      "#/*": [
+        "types/*"
+      ]
+    },
+    
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,6 +30,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  // include也需要配置以下：
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,71 +1,127 @@
-// state数据初始化
-const getDefaultState = () => {
-    return {
-        token: sessionStorage.getItem('token'), 
-        reftoken: sessionStorage.getItem('reftoken'),       
-        c3UserGroups: [],          
-        roles: [],            
-        nickName: '',
-        username: '',
-        userId: null 
-    }
+import { defineStore } from 'pinia'
+import type { UserInfo } from '#/store';
+import { getAuthCache, setAuthCache } from '@/utils/auth/index';
+import { ROLES_KEY, TOKEN_KEY, REFTOKEN_KEY, USER_INFO_KEY, BUREAU_INFO_KEY, BUREAUTREE_INFO_KEY } from '@/enums/cacheEnum';
+import { get_bureauList } from '@/api/system/bureau';
+import { RoleEnum } from '@/enums/roleEnum';
+import { type Nullable } from '@/utils/types/utils'
+import { store } from '@/store';
+interface UserState {
+    userInfo: Nullable<UserInfo>;
+    token?: string;
+    reftoken?: string;
+    roleList: RoleEnum[];
+    // lastUpdateTime: number;
+    bureauList: undefined;
+    userBureauTreeList: undefined
 }
-const state = getDefaultState()
 
-const mutations = {
-    setToken(state: any, token: string) {
-        state.token = token
+export const useUserStore = defineStore({
+    id: 'app-user',
+    state: (): UserState => ({
+        // user info
+        userInfo: null,
+        // token
+        token: '',
+        // reftoken
+        reftoken: '',
+        // roleList
+        roleList: [],
+        bureauList: undefined,
+        userBureauTreeList: undefined
+    }),
+    getters: {
+        getUserInfo(state): UserInfo {
+            return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+        },
+        getToken(state): string {
+            return state.token || getAuthCache<string>(TOKEN_KEY);
+        },
+        getRefToken(state): string {
+            return state.reftoken || getAuthCache<string>(REFTOKEN_KEY);
+        },
+        getRoleList(state): RoleEnum[] {
+            return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+        },
+        getBureauList(state) {
+            return state.bureauList || getAuthCache(BUREAU_INFO_KEY);
+        },
+        getBureauTreeList(state) {
+            return state.userBureauTreeList || getAuthCache(BUREAUTREE_INFO_KEY);
+        }
     },
-    setC3UserGroups(state: any, c3UserGroups: any) {
-        state.c3UserGroups = c3UserGroups
-    },
-    setRoles(state: any, roles: any) {
-        state.roles = roles
-    },
-    setNickName(state: any, nickName: string) {
-        state.nickName = nickName
-    },
-    setUsername(state: any, username: string) {
-        state.username = username
-    },
-    setUserId(state: any, userId: Number) {
-        state.userId = userId
-    },
-    resetState: (state: any) => {
-        Object.assign(state, getDefaultState())
-    }
-}
-const actions = {
-    // 用户登录
-    userLogin({ commit }, resultData: any) {
-        console.log('+++++++++++++', resultData)
-        // 获取数据, 更新state中的数据
-        commit('setToken', resultData.Authorization)
-        sessionStorage.setItem('token', resultData.Authorization)
+    actions: {
+        setToken(info: string | undefined) {
+            this.token = info ? info : ''; // for null or undefined value
+            setAuthCache(TOKEN_KEY, info);
+        },
+        setRefToken(info: string | undefined) {
+            this.reftoken = info ? info : ''; // for null or undefined value
+            setAuthCache(REFTOKEN_KEY, info);
+        },
+        setRoleList(roleList: RoleEnum[]) {
+            this.roleList = roleList;
+            setAuthCache(ROLES_KEY, roleList);
+        },
+        setUserInfo(info: UserInfo | null) {
+            // console.log('info222:', info)
+            this.userInfo = info;
+            setAuthCache(USER_INFO_KEY, info);
+        },
+        resetState() {
+            this.userInfo = null;
+            this.token = '';
+            this.roleList = []
+        },
+        async getBureauInfo(){
+            const bureauInfo = await get_bureauList()
+            // this.bureauList = bureauInfo
+            setAuthCache(BUREAU_INFO_KEY, bureauInfo)
+        },
+        // async getBureauTreeInfo(){
+        //     const bureauInfo = await get_currentUserBureauTree()
+        //     this.userBureauTreeList = bureauInfo
+        //     setAuthCache(BUREAUTREE_INFO_KEY, bureauInfo)
+        // },
 
-        commit('reftoken', resultData.reftoken)
-        sessionStorage.setItem('reftoken', resultData.reftoken)
-        
-        commit('setUserId', resultData.loginUserInfo.user.dataNum)
-        commit('setNickName', resultData.loginUserInfo.user.nickName)
-        commit('setUsername', resultData.loginUserInfo.user.username)
-        commit('setC3UserGroups', resultData.loginUserInfo.c3UserGroups)
-        commit('setRoles', resultData.loginUserInfo.roles)
+        /**
+         * @description: // 用户登录
+        */
+        userLogin(params: any) {
+            // console.log('res:', params)
+            const { Authorization, reftoken, loginUserInfo }  = params.data
+
+            // console.log('result:', Authorization, reftoken, loginUserInfo)
+            // 保存/更新 token
+            this.setToken(Authorization);
+            this.setRefToken(reftoken);
+            // 更新用户信息
+            this.setUserInfo(loginUserInfo);
+            return this.afterLoginAction()
+        },
+        async afterLoginAction() {
+            if (!this.getToken) return null;
+            this.getBureauInfo()
+        },
+        // 前端 登出
+        userLogOut() { 
+            localStorage.clear()
+            sessionStorage.clear() // 清空sessionStorage数据
+            this.setToken(undefined);
+            this.setRefToken(undefined);
+            this.setUserInfo(null);
+            // return new Promise(resolve => {
+            // reset visited views and cached views
+            // dispatch('tagsView/delAllViews', null, { root: true })
+            // resolve()
+            //   })
+        }
     },
-    // 前端 登出
-    userLogOut({ commit }) { 
-        sessionStorage.clear() // 清空sessionStorage数据
-        commit('resetState')  // 清除 store数据
-        // return new Promise(resolve => {
-        // reset visited views and cached views
-        // dispatch('tagsView/delAllViews', null, { root: true })
-        // resolve()
-        //   })
-    }
-}
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
+
+
+});
+
+// Need to be used outside the setup
+export function useUserStoreWithOut() {
+    return useUserStore(store);
 }

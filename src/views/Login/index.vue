@@ -1,18 +1,18 @@
 <template>
-    <a-form :model="formState" name="basic" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" autocomplete="off"
+    <a-form :model="formData" name="basic" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" autocomplete="off"
         @finish="handleLogin" @finishFailed="onFinishFailed" class="login">
         <a-form-item label="用户名" name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
-            <a-input v-model:value="formState.username" />
+            <a-input v-model:value="formData.username" />
         </a-form-item>
         <a-form-item label="密&nbsp;&nbsp;&nbsp;码" name="password" :rules="[{ required: true, message: '请输入密码!' }]">
-            <a-input-password v-model:value="formState.password" />
+            <a-input-password v-model:value="formData.password" />
         </a-form-item>
 
         <a-form-item label="验证码" name="code" :rules="[{ required: true, message: '请输入验证码!' }]">
             <a-row class="enter-x">
                 <a-col :span="16">
                     <a-input
-                        v-model:value="formState.code"
+                        v-model:value="formData.code"
                         type="text"
                         placeholder="点击图片更换验证码"
                         class="vertify_code"
@@ -37,24 +37,23 @@
 
 <script setup lang="ts">
 import { message } from 'ant-design-vue';
-import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
+// import { reactive, ref, toRaw, unref, computed, onMounted } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { useRouter } from "vue-router";
-import { useStore } from 'vuex'
+import { useUserStore } from '@/store/modules/user'
 import { getMapping, postMapping } from "@/api/request";
-// const store = useStore()
-// 在某个函数中触发action
-console.log('store:', useStore())
+const userStore = useUserStore();
 
 const codeImgUrl= ref<string>('')
 const router = useRouter()
-interface FormState {
+interface formData {
     username: string;
     password: string;
     randomKey: Number;
     code: string;
 }
 const spinning = ref(false)
-const formState = reactive<FormState>({
+const formData = reactive<formData>({
     username: '',
     password: '',
     randomKey: Math.floor(Math.random() * 4000 + 1000),
@@ -63,10 +62,10 @@ const formState = reactive<FormState>({
 const handleLogin = () => {
     spinning.value = !spinning.value
     const userInfo = {
-        password: formState.password,
-        username: formState.username,
-        randomKey: formState.randomKey,
-        code: Number(formState.code),
+        password: formData.password,
+        username: formData.username,
+        randomKey: formData.randomKey,
+        code: Number(formData.code),
         mode: 'none', // 不要默认的错误提示
     }
     // post请求
@@ -74,12 +73,18 @@ const handleLogin = () => {
         const { code, data } = res.data
         // console.log("code", code, data)
         if (0 == code) {
+            // 获取数据, 更新数据
+            sessionStorage.setItem('token', data.Authorization);
+            sessionStorage.setItem('reftoken', data.reftoken);
             message.success('登录成功');
             spinning.value = !spinning.value
-            store.dispatch("user/userLogin", data).then(() =>{
-                router.push({ path: '/' }).catch(() => {})
-            }).catch(() =>{
-            })
+            // 设置数据
+            // userStore.setUserInfo({ data });
+
+            // 传送登录成功的信息
+            userStore.userLogin({ data });
+            // 跳转到首页
+            router.push({ path: '/' })
         } else {
             message.error('登录失败');
         }
@@ -94,7 +99,7 @@ onMounted(() => {
 // 点击图片更换验证码
 async function resetImg() {
     const _code = {
-        randomKey: formState.randomKey
+        randomKey: formData.randomKey
     }
     // 回调接口
     await getMapping('/api/open/code', _code, 'blob').then((res) => {

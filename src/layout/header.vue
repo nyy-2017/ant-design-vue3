@@ -51,9 +51,8 @@
       <a-dropdown>
         <span class="flex justify-center items-center outline-none">
           <img src="@/assets/images/header.png" class="w-40px h-40px b-rd-50%" />
-          <!-- <span class="ml-4px">{{ userInfo.username }}</span> -->
           <span class="ml-4px" style="font-size:18px"> 
-            管理员123
+            {{ getUserInfo.user.nickName }}
             <DownOutlined />
           </span>
         </span>
@@ -74,16 +73,22 @@
 <script setup lang="ts">
 import { MenuProps } from 'ant-design-vue/es';
 import { DownOutlined } from '@ant-design/icons-vue';
-import { useRoute, useRouter } from "vue-router";
-import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect, watch } from 'vue';
-import { useStore } from 'vuex';
-const store = useStore();
-console.log('useUserStore:', store)
-computed(() => {
-  const { user } = store.state
-  console.log('user:', user)
-})
+import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
+// import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
+import { useUserStore } from '@/store/modules/user'
+const userStore = useUserStore();
 const activePath = ref(''); // header 新旧版路由切换变量
+
+// 获取用户名
+const getUserInfo = computed(() => {
+  const { user = '' } = userStore.getUserInfo || {};
+  return { user };
+});
+
+console.log('getUserInfo:', getUserInfo, userStore.userInfo)
+
+
 
 // 退出全屏方法
 const isFullScreen = ref(false);
@@ -144,23 +149,20 @@ const breadcrumbs = computed(() => {
   layoutRoutes.value && findBreadcrumb(layoutRoutes.value);
   return breadcrumbArr;
 });
-// const { userInfo } = storeToRefs(useStore().user);
 
 const handleLogout: MenuProps['onClick'] = ({ key }) => {
   if (key === 'logout') {
     // clearCache();
     // window.location.reload();
     // store 里面的退出登录方法
-    store.dispatch("user/userLogOut").then(() =>{
-      router.push({ path: '/login' }).catch(() => {})
-    }).catch(() =>{})
+    userStore.userLogOut();
+    router.push({ path: '/login' })
   }
 };
 
-
-
 // 监听路由方法
 watch(() => router.currentRoute.value, (newValue: any) => {
+    console.log('newValue:', newValue)
     // console.log('newValue：', newValue, window.location.pathname)
     activePath.value = window.location.pathname
   },

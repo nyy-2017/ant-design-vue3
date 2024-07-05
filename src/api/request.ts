@@ -78,14 +78,24 @@ export const postMapping = (url: string, data: any) => {
         method: 'post',
         url: url,
         data: qs.stringify(data),
-        options: {
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
+        // options: {
+        //     headers: {
+        //       'Content-Type': 'application/x-www-form-urlencoded'
+        //     }
+        // }
     })
 }
-// 3.put请求
+// 3. POST2 请求
+export const requestMapping = (url: string, data: any) => {
+    return request({
+        method: 'post',
+        url: url,
+        data: data
+    })
+}
+
+
+// 4.put请求
 export const putMapping = (url: string, data: any) => {
     return request({
         method: 'put',
@@ -93,7 +103,7 @@ export const putMapping = (url: string, data: any) => {
         data: data
     })
 }
-// 4.delete 请求
+// 5.delete 请求
 export const deleteMapping = (url: string, data: any) => {
     return request({
         method: 'delete',
@@ -101,17 +111,6 @@ export const deleteMapping = (url: string, data: any) => {
         data: data
     })
 }
-// 自定义请求,可传入method、url、data的属性值
-export const requestMapping = (method: string, url: string, data: any) => {
-    if ('get' == method || 'GET' == method) {
-        return getMapping(url, data);
-    } else {
-        return request({
-            method: method,
-            url: url,
-            data: data
-        })
-    }
-}
+
 // 导出request供其他组件使用
 export default request

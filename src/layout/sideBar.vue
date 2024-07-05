@@ -9,7 +9,7 @@
   >
     <!-- logo图 -->
     <div class="logo">
-      <img src="@/assets/images/logo1.png" alt />
+      <img src="@/assets/images/logo1.png" />
       <span>&nbsp;&nbsp;六捷C3超时管理系统</span>
     </div>
     <MenuItem :routes="routes" v-if="routes" />
@@ -19,8 +19,9 @@
 <script setup lang="ts">
 import { MenuProps } from 'ant-design-vue/es';
 import MenuItem from './menuItem.vue';
-import { useRoute, useRouter } from "vue-router";
-import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect } from 'vue';
+import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
+// import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect } from 'vue';
+import { reactive, computed, watchEffect } from 'vue';
 
 const props = defineProps<{ isCollapse?: boolean }>();
 

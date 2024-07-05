@@ -21,7 +21,7 @@
     import { ref } from 'vue';
     const percentNum = ref<Number>(0);
     const containText = ref<string>('');
-    let strArr = []
+    let strArr: any[]
     getData()
     function getData() {
         let controller = new AbortController();

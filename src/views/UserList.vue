@@ -40,7 +40,7 @@
 <script setup lang="ts">
 import { DownOutlined, SmileOutlined } from '@ant-design/icons-vue';
 import { onMounted, ref } from "vue";
-import { getMapping } from "../api/request";
+// import { getMapping } from "../api/request";
 const columns = [
     {
         name: 'userName',
@@ -81,34 +81,11 @@ onMounted(() => {
 })
 //获取用户列表
 const getListUser = () => {
-    getMapping("/api/system/user/list", null).then((res) => {
-        const { result } = res.data
-        console.log('请求结果：', result)
-        data.value = result
-        console.log("data===222", data)
-    })
+    // getMapping("/api/system/user/list", null).then((res) => {
+    //     const { result } = res.data
+    //     console.log('请求结果：', result)
+    //     data.value = result
+    //     console.log("data===222", data)
+    // })
 }
-/*const data = [
-{
-key: '1',
-name: 'John Brown',
-age: 32,
-address: 'New York No. 1 Lake Park',
-tags: ['nice', 'developer'],
-},
-{
-key: '2',
-name: 'Jim Green',
-age: 42,
-address: 'London No. 1 Lake Park',
-tags: ['loser'],
-},
-{
-key: '3',
-name: 'Joe Black',
-age: 32,
-address: 'Sidney No. 1 Lake Park',
-tags: ['cool', 'teacher'],
-},
-];*/
 </script>

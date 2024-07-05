@@ -28,7 +28,7 @@ import type { Rule } from 'ant-design-vue/es/form';
 import { reactive, ref, toRaw } from 'vue';
 import type { FormInstance } from 'ant-design-vue';
 import router from "../router";
-import { postMapping, requestMapping } from "../api/request";
+import { postMapping } from "../api/request";
 interface FormState {
     userName: string,
     fullName: string,
@@ -89,10 +89,6 @@ const layout = {
 };
 const handleFinish = (values: FormState) => {
     console.log(values, formState);
-    /*requestMapping('post',"/api/sys/sysUser/addUser", toRaw(values)).then((res)
-    => {
-    console.log("请求成功",res)
-    })*/
     postMapping("/api/sys/sysUser/addUser", toRaw(values)).then((res) => {
         console.log("请求成功", res)
     })
