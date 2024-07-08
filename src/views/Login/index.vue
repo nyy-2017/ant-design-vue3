@@ -78,7 +78,7 @@ const handleLogin = () => {
             sessionStorage.setItem('reftoken', data.reftoken);
             message.success('登录成功');
             spinning.value = !spinning.value
-            // 设置数据
+            // 更新store数据
             // userStore.setUserInfo({ data });
 
             // 传送登录成功的信息

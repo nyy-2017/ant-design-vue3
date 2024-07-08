@@ -4,6 +4,9 @@ NProgress.configure({ showSpinner: false });
 
 import router from '@/router';
 
+
+
+
 router.beforeEach((to, _from, next) => {
   NProgress.start();
   const token = sessionStorage.getItem('token');

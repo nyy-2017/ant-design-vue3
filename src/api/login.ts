@@ -24,3 +24,21 @@ export function checkLogin(data: any) {
     }
   })
 }
+
+// 刷新token
+export function refreshToken(data) {
+  return request({
+    url: '/api/reftoken',
+    method: 'get',
+    params: data
+  })
+}
+
+// 登出
+export function loginOut(data) {
+  return request({
+    url: '/api/logout/success',
+    method: 'get',
+    params: data
+  })
+}

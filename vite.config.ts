@@ -48,6 +48,8 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
+        // 使用了scss类库 sass，scss编译的时候，因为被编译的文件里可能有中文导致 打包的时候 警告，
+        charset: false, // 把charset关掉就行了
         additionalData: `@use "@/styles/mixins.scss" as *;`,
       },
     }

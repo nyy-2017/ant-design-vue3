@@ -86,9 +86,7 @@ const getUserInfo = computed(() => {
   return { user };
 });
 
-console.log('getUserInfo:', getUserInfo, userStore.userInfo)
-
-
+// console.log('getUserInfo:', getUserInfo, userStore.userInfo)
 
 // 退出全屏方法
 const isFullScreen = ref(false);
@@ -156,7 +154,9 @@ const handleLogout: MenuProps['onClick'] = ({ key }) => {
     // window.location.reload();
     // store 里面的退出登录方法
     userStore.userLogOut();
-    router.push({ path: '/login' })
+    setTimeout(() => {
+      router.push({ path: '/login' })
+    }, 300)
   }
 };
 

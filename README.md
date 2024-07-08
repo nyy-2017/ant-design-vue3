@@ -6,6 +6,28 @@ npm i --save-dev @types/nprogress
 npm i --save-dev @types/crypto-js
 npm i --save-dev @types/lodash-es
 
+npm install vxe-table@next
+
+# 生命周期
+# 选项式 API 的生命周期选项和组合式 API 之间的映射
+
+beforeCreate -> 使用 setup()
+created -> 使用 setup()
+beforeMount -> onBeforeMount
+mounted -> onMounted
+beforeUpdate -> onBeforeUpdate
+updated -> onUpdated
+beforeUnmount -> onBeforeUnmount
+unmounted -> onUnmounted
+errorCaptured -> onErrorCaptured
+renderTracked -> onRenderTracked
+renderTriggered -> onRenderTriggered
+activated -> onActivated
+deactivated -> onDeactivated
+
+
+
+
 1. import qs from 'qs' 正确安装方法
 npm install @types/qs --save-dev
 
@@ -14,8 +36,10 @@ npm install @types/qs --save-dev
 npm install crypto-js
 
 
-3. 安装使用pinia 以及pinia的持久化
+3. 安装使用pinia 以及pinia的持久化  (https://blog.csdn.net/weixin_69890748/article/details/138345287)
 npm install pinia
+npm i pinia-plugin-persist
+
 store/index.ts文件
 import { createPinia } from "pinia";
  
@@ -24,6 +48,9 @@ const pinia = createPinia();
  
 // 导出
 export default pinia;
+
+
+
 
 pinia的持久化依赖： 
 npm i pinia-plugin-persistedstate

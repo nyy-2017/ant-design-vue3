@@ -1,20 +1,8 @@
-// import { createStore } from 'vuex'
-// import user from './modules/user'
-// export default createStore({
-//     modules: {
-//         user
-//     }
-// })
-
-import type { App } from 'vue'
 import { createPinia } from 'pinia'
-import { registerPiniaPersistPlugin } from './plugin/persist'
+// 引入持久化插件
+import piniaPluginPersist from 'pinia-plugin-persist'
+const store = createPinia();
  
-const store = createPinia()
-registerPiniaPersistPlugin(store)
- 
-export function setupStore(app: App<Element>) {
-  app.use(store)
-}
- 
-export { store }
+// 使用该插件
+store.use(piniaPluginPersist)
+export default store

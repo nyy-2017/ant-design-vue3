@@ -1,89 +1,72 @@
 import { defineStore } from 'pinia'
-import type { UserInfo } from '#/store';
-import { getAuthCache, setAuthCache } from '@/utils/auth/index';
-import { ROLES_KEY, TOKEN_KEY, REFTOKEN_KEY, USER_INFO_KEY, BUREAU_INFO_KEY, BUREAUTREE_INFO_KEY } from '@/enums/cacheEnum';
 import { get_bureauList } from '@/api/system/bureau';
-import { RoleEnum } from '@/enums/roleEnum';
-import { type Nullable } from '@/utils/types/utils'
-import { store } from '@/store';
+
+// 定义一个泛型接口
 interface UserState {
-    userInfo: Nullable<UserInfo>;
-    token?: string;
-    reftoken?: string;
-    roleList: RoleEnum[];
-    // lastUpdateTime: number;
-    bureauList: undefined;
-    userBureauTreeList: undefined
+    userInfo: object;
+    token: string;
+    reftoken: string;
+    roleList: any[];
+    bureauList: any[];
+    userBureauTreeList: any[]
 }
 
 export const useUserStore = defineStore({
-    id: 'app-user',
+    id: 'user',
     state: (): UserState => ({
-        // user info
-        userInfo: null,
-        // token
+        userInfo: {},
         token: '',
-        // reftoken
         reftoken: '',
-        // roleList
         roleList: [],
-        bureauList: undefined,
-        userBureauTreeList: undefined
+        bureauList: [],
+        userBureauTreeList: []
     }),
     getters: {
-        getUserInfo(state): UserInfo {
-            return state.userInfo || getAuthCache<UserInfo>(USER_INFO_KEY) || {};
+        getUserInfo(state): object {
+            return state.userInfo;
         },
         getToken(state): string {
-            return state.token || getAuthCache<string>(TOKEN_KEY);
+            return state.token;
         },
         getRefToken(state): string {
-            return state.reftoken || getAuthCache<string>(REFTOKEN_KEY);
+            return state.reftoken;
         },
-        getRoleList(state): RoleEnum[] {
-            return state.roleList.length > 0 ? state.roleList : getAuthCache<RoleEnum[]>(ROLES_KEY);
+        getRoleList(state): any[] {
+            return state.roleList.length > 0 ? state.roleList : [];
         },
         getBureauList(state) {
-            return state.bureauList || getAuthCache(BUREAU_INFO_KEY);
+            return state.bureauList;
         },
         getBureauTreeList(state) {
-            return state.userBureauTreeList || getAuthCache(BUREAUTREE_INFO_KEY);
+            return state.userBureauTreeList;
         }
     },
     actions: {
-        setToken(info: string | undefined) {
-            this.token = info ? info : ''; // for null or undefined value
-            setAuthCache(TOKEN_KEY, info);
+        setToken(info: string) {
+            this.token = info; 
         },
-        setRefToken(info: string | undefined) {
-            this.reftoken = info ? info : ''; // for null or undefined value
-            setAuthCache(REFTOKEN_KEY, info);
+        setRefToken(info: string) {
+            this.reftoken = info; 
         },
-        setRoleList(roleList: RoleEnum[]) {
+        setRoleList(roleList: any[]) {
             this.roleList = roleList;
-            setAuthCache(ROLES_KEY, roleList);
         },
-        setUserInfo(info: UserInfo | null) {
-            // console.log('info222:', info)
+        setUserInfo(info: object) {
             this.userInfo = info;
-            setAuthCache(USER_INFO_KEY, info);
         },
         resetState() {
-            this.userInfo = null;
+            this.userInfo = {};
             this.token = '';
             this.roleList = []
         },
         async getBureauInfo(){
-            const bureauInfo = await get_bureauList()
-            // this.bureauList = bureauInfo
-            setAuthCache(BUREAU_INFO_KEY, bureauInfo)
+            const response  = await get_bureauList() 
+            const { data } = response.data
+            if (data) {
+                // console.log('bureauInfo:', data)
+                this.bureauList = data
+            }
         },
-        // async getBureauTreeInfo(){
-        //     const bureauInfo = await get_currentUserBureauTree()
-        //     this.userBureauTreeList = bureauInfo
-        //     setAuthCache(BUREAUTREE_INFO_KEY, bureauInfo)
-        // },
-
         /**
          * @description: // 用户登录
         */
@@ -107,9 +90,9 @@ export const useUserStore = defineStore({
         userLogOut() { 
             localStorage.clear()
             sessionStorage.clear() // 清空sessionStorage数据
-            this.setToken(undefined);
-            this.setRefToken(undefined);
-            this.setUserInfo(null);
+            this.setToken('');
+            this.setRefToken('');
+            this.setUserInfo({});
             // return new Promise(resolve => {
             // reset visited views and cached views
             // dispatch('tagsView/delAllViews', null, { root: true })
@@ -117,11 +100,18 @@ export const useUserStore = defineStore({
             //   })
         }
     },
-
-
+    // 使用该插件，开启数据缓存
+    persist: {
+        enabled: true,
+        strategies: [
+            {
+                // key的名称
+                key: 'userInfo',
+                // 可更改为localStorage ，如果不设置，默认存储为sessionStorage 
+                storage: localStorage,
+                // 可以选择哪些进入local存储，这样就不用全部都进去存储了， 默认是全部进去存储
+                // paths: ['token']
+            }
+        ]
+    }
 });
-
-// Need to be used outside the setup
-export function useUserStoreWithOut() {
-    return useUserStore(store);
-}
