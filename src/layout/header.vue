@@ -1,13 +1,13 @@
 <template>
   <div class="header-container h-100%">
     <div class="flex justify-center items-center" style="min-width: 100px;">
-      <span
-        class="cursor-pointer mr-14px text-20px flex justify-center items-center"
-        @click="emits('update:isCollapse', !isCollapse)"
-        >
-        <i class="iconfont icon-menu-fold-outlined" v-if="!isCollapse"></i>
-        <i class="iconfont icon-MenuUnfoldOutlined" ></i>
+      <span class="cursor-pointer mr-14px text-20px flex justify-center items-center">
+        <a-button type="primary" @click="emits('update:isCollapse', !isCollapse)">
+          <MenuUnfoldOutlined v-if="isCollapse" />
+          <MenuFoldOutlined v-else />
+        </a-button>
       </span>
+
       <!-- <i-ep:fold v-if="!isCollapse" />
       <i-ep:expand v-else /> -->
 
@@ -49,8 +49,8 @@
       </span>
       <!-- 退出登录 -->
       <a-dropdown>
-        <span class="flex justify-center items-center outline-none">
-          <img src="@/assets/images/header.png" class="w-40px h-40px b-rd-50%" />
+        <span class="flex justify-center items-center outline-none logout_css">
+          <img src="@/assets/images/header.png" class="w-25px h-25px b-rd-50%" />
           <span class="ml-4px" style="font-size:18px"> 
             {{ getUserInfo.user.nickName }}
             <DownOutlined />
@@ -72,7 +72,7 @@
 
 <script setup lang="ts">
 import { MenuProps } from 'ant-design-vue/es';
-import { DownOutlined } from '@ant-design/icons-vue';
+import { DownOutlined, MenuFoldOutlined, MenuUnfoldOutlined, } from '@ant-design/icons-vue';
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
 // import { reactive, ref, toRaw, unref, computed, onMounted, watchEffect, watch } from 'vue';
 import { ref, computed, watch } from 'vue';
@@ -188,8 +188,18 @@ const newReporRouter = (item: string) => {
 }
 .report_css {
   margin-right: 20px;
+  .item {
+    span {
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
 }
 .fullScreen_css {
-  margin-right: 15px;
+  margin-right: 25px;
+  cursor: pointer;
+}
+.logout_css {
+  cursor: pointer;
 }
 </style>

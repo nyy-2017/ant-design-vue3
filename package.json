@@ -27,7 +27,8 @@
     "vue": "^3.4.21",
     "vue-router": "^4.3.3",
     "vuex": "^4.1.0",
-    "vxe-table": "^4.7.45"
+    "vxe-pc-ui": "^4.0.53",
+    "vxe-table": "^4.7.46"
   },
   "devDependencies": {
     "@types/crypto-js": "^4.2.2",

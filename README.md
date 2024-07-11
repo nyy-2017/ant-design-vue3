@@ -6,7 +6,23 @@ npm i --save-dev @types/nprogress
 npm i --save-dev @types/crypto-js
 npm i --save-dev @types/lodash-es
 
-npm install vxe-table@next
+npm install vxe-table@next vxe-pc-ui
+
+vue vxe-ui vxe-table 4.0-4.6 升级到 v4.7 报错
+# 修改后
+// ...
+import VxeUI from 'vxe-pc-ui'
+import 'vxe-pc-ui/lib/style.css'
+// ...
+
+import VxeTable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+// ...
+
+createApp(App).use(VxeUI).use(VxeTable).mount('#app')
+
+
+
 
 # 生命周期
 # 选项式 API 的生命周期选项和组合式 API 之间的映射

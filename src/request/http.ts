@@ -1,8 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 import router from '../router/index';
 import { message, Modal } from "ant-design-vue";
-import { ExclamationCircleOutlined } from '@ant-design/icons-vue';
-import { ref, createVNode } from 'vue';
+import { ref } from 'vue';
 import { refreshToken } from '@/api/login';
 // import qs from 'qs'
 
@@ -88,6 +87,10 @@ request.interceptors.response.use(
                                 // 重试完了别忘了清空这个队列
                                 requests.value = []
                                 return service(config)
+                            } else if (res.data.code === 11021) {
+                                console.log('刷新Token已过期')
+                                // 刷新Token已过期
+                                resetLogin() 
                             }
                         }
                     }).catch((error) => {
@@ -112,6 +115,7 @@ request.interceptors.response.use(
                 }
 
             } else if (code === 11021) {
+                console.log('11021')
                 // 刷新Token已过期
                 resetLogin()
                 return Promise.resolve(response)
@@ -147,13 +151,16 @@ const resetLogin = () => {
             const userStore = useUserStore();
             Modal.confirm({
                 title: '温馨提示:',
-                icon: createVNode(ExclamationCircleOutlined),
                 content: '身份验证已过期，请重新登录！',
+                okText: '确认',
+                cancelText: '取消',
                 onOk() {
                     return new Promise((resolve, reject) => {
                         messageFlag.value = true
                         // store 里面的退出登录方法
-                        userStore.userLogOut();
+                        if (userStore) {
+                            userStore.userLogOut();
+                        }
                         setTimeout(() => {
                             router.push('/login')
                         }, 300)
@@ -164,7 +171,9 @@ const resetLogin = () => {
                 // eslint-disable-next-line @typescript-eslint/no-empty-function
                 onCancel() {
                     // store 里面的退出登录方法
-                    userStore.userLogOut();
+                    if (userStore) {
+                        userStore.userLogOut();
+                    }
                     setTimeout(() => {
                         router.push('/login')
                     }, 300)

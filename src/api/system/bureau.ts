@@ -1,5 +1,5 @@
 // import request from '@/api/request'
-import request from '@/requets/http'
+import request from '@/request/http'
 
 // 查询所有路局
 export function get_bureauList() { 

@@ -65,9 +65,9 @@ const routes: Array<RouteRecordRaw> = [
                 ]
             },
             {
-                path: "/systems",
+                path: "/authorization",
                 name: '权限管理',
-                // component: 'systems',
+                // component: 'authorization',
                 meta: {
                     title: '权限管理',
                     icon: "iconfont icon-quanxianguanli",
@@ -76,7 +76,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/organ",
                         name: '机构信息',
-                        component: () => import("@/views/systems/organ.vue"),
+                        component: () => import("@/views/authorization/organ/index.vue"),
                         meta: {
                             title: '机构信息',
                             icon: "iconfont icon-jigouxinxi",
@@ -85,7 +85,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/role",
                         name: '角色信息',
-                        component: () => import("@/views/systems/role.vue"),
+                        component: () => import("@/views/authorization/role/index.vue"),
                         meta: {
                             title: '角色信息',
                             icon: "iconfont icon-jiaosexinxi",
@@ -94,7 +94,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/user",
                         name: '用户信息',
-                        component: () => import("@/views/systems/user.vue"),
+                        component: () => import("@/views/authorization/user/index.vue"),
                         meta: {
                             title: '用户信息',
                             icon: "iconfont icon-yonghuxinxi",
@@ -103,7 +103,7 @@ const routes: Array<RouteRecordRaw> = [
                     {
                         path: "/menu",
                         name: '菜单信息',
-                        component: () => import("@/views/systems/menu.vue"),
+                        component: () => import("@/views/authorization/menu/index.vue"),
                         meta: {
                             title: '菜单信息',
                             icon: "iconfont icon-caidanxinxi"
@@ -111,7 +111,7 @@ const routes: Array<RouteRecordRaw> = [
                     },
                     {
                         path: "/person",
-                        component: () => import("../views/systems/person.vue"),
+                        component: () => import("../views/authorization/person/index.vue"),
                         name: '个人信息',
                         meta: {
                             title: '个人信息',
