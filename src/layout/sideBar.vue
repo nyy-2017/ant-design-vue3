@@ -2,7 +2,7 @@
   <a-menu
     v-model:openKeys="menuState.openKeys"
     v-model:selectedKeys="menuState.selectedKeys"
-    class="h-100% w-200px"
+    class="h-100% w-232px"
     mode="inline"
     theme="dark"
     :inline-collapsed="props.isCollapse"
@@ -11,7 +11,7 @@
     <!-- logo图-->
     <div class="logo">
       <img src="@/assets/images/logo1.png" />
-      <span v-if="!props.isCollapse">&nbsp;&nbsp;六捷C3超时管理系统</span>
+      <span v-if="!props.isCollapse">&nbsp;六捷C3超时管理系统</span>
     </div>
 
     <MenuItem :routes="routes" v-if="routes"></MenuItem>
@@ -22,7 +22,7 @@
 import { MenuProps } from 'ant-design-vue/es';
 import MenuItem from './menuItem.vue';
 import { RouteRecordRaw, useRoute, useRouter } from "vue-router";
-import { reactive, computed, watch, watchEffect } from 'vue';
+import { reactive, computed, onMounted, watch, watchEffect } from 'vue';
 
 const props = defineProps<{ isCollapse?: boolean }>();
 const route = useRoute();
@@ -57,14 +57,26 @@ const handleClickMenu: MenuProps['onClick'] = (menuInfo) => {
   // console.log('menuInfo:', menuInfo)
   router.push({ path: menuInfo.key as string });
   menuState.selectedKeys = [menuInfo.key]
+  localStorage.setItem('menuState', JSON.stringify(menuState) ) 
 };
 
 watch(() => menuState.openKeys,
   val => {
-    console.log('openKeys:', val);
+    console.log('openKeys:', val, menuState);
+    localStorage.setItem('menuState', JSON.stringify(menuState) ) 
   }
 );
+onMounted(() => { 
+  console.log("页面装载了", route, localStorage.getItem('menuState'))
+  if(localStorage.getItem('menuState')){
+    menuState.selectedKeys =  localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).selectedKeys  : [] 
+    menuState.openKeys =  localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).openKeys :[] 
 
+  }else {
+
+    menuState.selectedKeys = [route.path]
+  }
+});
 watchEffect(() => {
   // menuState.selectedKeys = [route.path];
   // const keyList: any = route.path.slice(1).split('/');
@@ -92,10 +104,12 @@ watchEffect(() => {
     vertical-align: middle;
     img {
       width: 36px;
-      vertical-align: inherit;
+      height: 36px;
+      vertical-align: middle;
+      margin-left: 10px;
     }
     span {
-      font-size: 15px;
+      font-size: 19px;
       font-weight: bold;
     }
   }

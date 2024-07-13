@@ -1,6 +1,6 @@
 <template>
   <a-layout class="h-100vh">
-    <a-layout-sider theme="light" :collapsed="isCollapse">
+    <a-layout-sider theme="light" :collapsed="isCollapse"> 
       <side-bar :isCollapse="isCollapse" />
     </a-layout-sider>
 
@@ -16,21 +16,26 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import Header from './header.vue';
   import sideBar from './sideBar.vue';
   const isCollapse = ref(false);
+  watch(()=> isCollapse.value,
+    val => {
+      console.log('isCollapse:', val);
+    }
+  );
 </script>
 
 <style lang="scss" scoped>
-// :where(.css-dev-only-do-not-override-19iuou).ant-layout .ant-layout-sider {
-//   max-width: 230px !important;
-//   flex: 0 0 230px !important;
-//   width: 230px !important;
-// }
-
 .ant-layout-header {
   border-bottom: 1px solid #ccc;
   box-shadow: 0 2px 8px 0 rgb(0 0 0 / 24%);
+}
+.ant-layout-sider:not(.ant-layout-sider-collapsed) {
+  min-width: 232px !important;
+  flex: 0 0 232px!important;
+  max-width: 232px!important;
+  width: 232px!important;
 }
 </style>

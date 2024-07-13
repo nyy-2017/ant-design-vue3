@@ -2,7 +2,7 @@
   <div class="header-container h-100%">
     <div class="flex justify-center items-center" style="min-width: 100px;">
       <span class="cursor-pointer mr-14px text-20px flex justify-center items-center">
-        <a-button type="primary" @click="emits('update:isCollapse', !isCollapse)">
+        <a-button type="primary" size="small" @click="emits('update:isCollapse', !isCollapse)">
           <MenuUnfoldOutlined v-if="isCollapse" />
           <MenuFoldOutlined v-else />
         </a-button>
