@@ -14,7 +14,9 @@
 
         <!-- 分页组件 -->
         <my-pagination
-            ref="changPageSize"
+            :currentPage="state.currentPage"
+            :pageSize="state.pageSize"
+            :total="state.total"
             @chilPageSize="parentChangePage"
         >
         </my-pagination>
@@ -30,10 +32,9 @@
 
     const state = reactive({
         currentPage: 1,
-        pageSize: 20
+        pageSize: 20,
+        total: 0
     });
-
-    const changPageSize = ref();
     const gridOptions = reactive<VxeGridProps>({
         id: 'VxeTable',
         border: true,
@@ -71,8 +72,6 @@
         },
     })
 
-    
-    
     function addChild() { // 新增
         // organModalComponent.value.addChildData()
     }
@@ -111,7 +110,7 @@
         gridGetData()
     })
     // 改变分页
-    function parentChangePage(currentPage: { value: any; }, pageSize: { value: any; }) {
+    function parentChangePage(currentPage, pageSize) {
         console.log('++++:', currentPage, pageSize)
         state.currentPage = currentPage
         state.pageSize = pageSize
@@ -133,7 +132,7 @@
         if (list) {
             console.log('list:', list, total)
             gridOptions.data = list
-            // total = total
+            state.total = total
             gridOptions.loading = false
         }
     }

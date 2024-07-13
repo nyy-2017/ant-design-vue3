@@ -33,8 +33,6 @@
   const emit = defineEmits(['chilPageSize']);
 
   const handlePageChange = ({ currentPage, pageSize }) => {
-    props.currentPage = currentPage
-    props.pageSize = pageSize
     emit('chilPageSize', currentPage, pageSize);
   };
    
