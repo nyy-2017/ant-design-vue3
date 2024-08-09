@@ -43,7 +43,6 @@ deactivated -> onDeactivated
 
 
 
-
 1. import qs from 'qs' 正确安装方法
 npm install @types/qs --save-dev
 
@@ -162,4 +161,34 @@ Menu 导航菜单  https://next.antdv.com/components/menu-cn
 // 使用vue-antDesign menu 页面(添加面包屑跳转) https://blog.csdn.net/hjy170314/article/details/108103706?spm=1001.2101.3001.6650.16&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-16-108103706-blog-131919857.235%5Ev43%5Epc_blog_bottom_relevance_base5&utm_relevant_index=22
 
 
+# 11、antd中modal模态框隐藏下面不需要的按钮
+1、要求弹框全部都不展示按钮
+ 在a-modal上加属性： :footer="null"
+2、当新增、查看、编辑共用一个弹框出现按钮文字不同时如下修改
+  同样也是在a-modal上添加属性： 
+  // cancelText：取消按钮文字，默认是取消，这时我们的查看需要的是返回
+  // inital.type为自己定义的，用来区分是新增add还是编辑edit以及查看view
+  :cancel-text="inital.type==='view'?'返回':'取消'"
+3、当新增、查看、编辑共用一个弹框按钮展示不同时如下操作
+  // 这里当为查看view的时候不展示确定按钮,如果是取消按钮也是同理
+  :ok-button-props="{style:{display:inital.type==='view'?'none':'block'}}"
+
+# 12、vue3 ant-design 使用a-date-picker 没有显示中文
+1.在main.js中加入
+
+  // ant-design-vue v3版本
+  import "dayjs/locale/zh-cn";
+
+  // ant-design-vue v2版本
+  import moment from ‘moment’;
+  import ‘moment/locale/zh-cn’;
+  moment.locale(‘zh-cn’);
+
+2.在App.vue中加入全局国际化
+  <a-config-provider :locale="zhCN">
+    <!--配置路由-->
+    <router-view></router-view>
+  </a-config-provider>
+  import zhCN from 'ant-design-vue/es/locale/zh_CN';
+  import 'dayjs/locale/zh-cn';
 

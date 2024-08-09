@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { get_bureauList } from '@/api/system/bureau';
+import { get_userInfo_userName } from '@/api/system/user'
 
 // 定义一个泛型接口
 interface UserState {
@@ -14,7 +15,13 @@ interface UserState {
 export const useUserStore = defineStore({
     id: 'user',
     state: (): UserState => ({
-        userInfo: {},
+        userInfo: {
+            dataNum: null,
+            nickName: '',
+            username: '',
+            roles: [],
+            c3UserGroups: []
+        },
         token: '',
         reftoken: '',
         roleList: [],
@@ -52,14 +59,26 @@ export const useUserStore = defineStore({
             this.roleList = roleList;
         },
         setUserInfo(info: object) {
-            this.userInfo = info;
+            // console.log('info:', info)
+            this.userInfo = {
+                dataNum: info.user.dataNum,
+                nickName: info.user.nickName,
+                username: info.user.username,
+                roles: info.roles,
+                c3UserGroups: info.c3UserGroups
+            } ;
         },
+        // 重置 state
         resetState() {
             this.userInfo = {};
             this.token = '';
-            this.roleList = []
+            this.reftoken = '';
+            this.roleList = [];
+            this.bureauList = [];
+            this.userBureauTreeList = [];
+            this.bureauList = [];
         },
-        async getBureauInfo(){
+        async getBureauInfo() {
             const response  = await get_bureauList() 
             const { data } = response.data
             if (data) {
@@ -82,17 +101,32 @@ export const useUserStore = defineStore({
             this.setUserInfo(loginUserInfo);
             return this.afterLoginAction()
         },
+        // 登录成功后 部分接口请求封装
         async afterLoginAction() {
             if (!this.getToken) return null;
             this.getBureauInfo()
         },
+        // 根据用户名 获取用户信息
+        async getUserInfoByUserName(name) {
+            const response  = await get_userInfo_userName(name)
+            const { data } = response.data
+            if (data) {
+                // console.log('data:', data)
+                this.userInfo.username = data.user.username
+                this.userInfo.nickName = data.user.nickName
+                this.userInfo.roles = data.roles
+                this.userInfo.c3UserGroups = data.c3UserGroups
+            }
+        },
+
+
         // 前端 登出
         userLogOut() { 
             localStorage.clear()
             sessionStorage.clear() // 清空sessionStorage数据
             this.setToken('');
             this.setRefToken('');
-            this.setUserInfo({});
+            this.resetState()
             // return new Promise(resolve => {
             // reset visited views and cached views
             // dispatch('tagsView/delAllViews', null, { root: true })

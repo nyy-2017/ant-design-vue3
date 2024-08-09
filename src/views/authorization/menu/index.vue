@@ -1,5 +1,3 @@
 <template>
-    <div>
-        menu
-    </div>
+    123
 </template>

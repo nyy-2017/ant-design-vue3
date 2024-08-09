@@ -226,10 +226,11 @@
                 message.error(res.data.message)
               }
           }).catch(_err =>{
-            message.error('表单验证不通过, 请检查核对相应字段是否合法.')
+            console.log(_err)
         })
       }).catch((err: any) =>{
           console.log(err)
+          message.error('表单验证不通过, 请检查核对相应字段是否合法.')
       })
     }
    
@@ -246,10 +247,11 @@
                     message.error(res.message)
                 }
             }).catch(_err =>{
-                message.error('表单验证不通过, 请检查核对相应字段是否合法.')
+                console.log(_err) 
             })
         }).catch((err: any) =>{
             console.log(err)
+            message.error('表单验证不通过, 请检查核对相应字段是否合法.')
         })
     }
     defineExpose({

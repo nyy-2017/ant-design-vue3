@@ -52,7 +52,7 @@
         <span class="flex justify-center items-center outline-none logout_css">
           <img src="@/assets/images/header.png" class="w-25px h-25px b-rd-50%" />
           <span class="ml-4px" style="font-size:18px"> 
-            {{ getUserInfo.user.nickName }}
+            {{ nickName }}
             <DownOutlined />
           </span>
         </span>
@@ -80,13 +80,13 @@ import { useUserStore } from '@/store/modules/user'
 const userStore = useUserStore();
 const activePath = ref(''); // header 新旧版路由切换变量
 
+// console.log('getUserInfo+++:',  userStore.userInfo)
 // 获取用户名
-const getUserInfo = computed(() => {
-  const { user = '' } = userStore.getUserInfo || {};
-  return { user };
+const nickName = computed(() => {
+  const { nickName } = userStore.getUserInfo || {}
+  return nickName;
 });
-
-// console.log('getUserInfo:', getUserInfo, userStore.userInfo)
+// console.log('nickName:', nickName)
 
 // 退出全屏方法
 const isFullScreen = ref(false);

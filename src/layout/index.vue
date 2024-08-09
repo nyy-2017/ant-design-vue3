@@ -8,7 +8,7 @@
       <a-layout-header class="h-60px! bg-#fff! px-20px!" style="line-height: 60px!important;">
         <Header v-model:isCollapse="isCollapse" />
       </a-layout-header>
-      <a-layout-content class="p-20px bg-#fff overflow-auto!">
+      <a-layout-content class="p-20px bg-#f5f7fa overflow-auto!">
         <router-view></router-view>
       </a-layout-content>
     </a-layout>

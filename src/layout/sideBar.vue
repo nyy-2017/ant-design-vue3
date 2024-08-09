@@ -67,13 +67,11 @@ watch(() => menuState.openKeys,
   }
 );
 onMounted(() => { 
-  console.log("页面装载了", route, localStorage.getItem('menuState'))
+  // console.log("页面装载了", localStorage.getItem('menuState'))
   if(localStorage.getItem('menuState')){
-    menuState.selectedKeys =  localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).selectedKeys  : [] 
-    menuState.openKeys =  localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).openKeys :[] 
-
-  }else {
-
+    menuState.selectedKeys = localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).selectedKeys  : [] 
+    menuState.openKeys = localStorage.getItem('menuState')? JSON.parse(localStorage.getItem('menuState')).openKeys :[] 
+  } else {
     menuState.selectedKeys = [route.path]
   }
 });

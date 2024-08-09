@@ -1,38 +1,45 @@
 <template>
-    <a-form :model="formData" name="basic" :label-col="{ span: 8 }" :wrapper-col="{ span: 16 }" autocomplete="off"
-        @finish="handleLogin" @finishFailed="onFinishFailed" class="login">
-        <a-form-item label="用户名" name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
-            <a-input v-model:value="formData.username" />
-        </a-form-item>
-        <a-form-item label="密&nbsp;&nbsp;&nbsp;码" name="password" :rules="[{ required: true, message: '请输入密码!' }]">
-            <a-input-password v-model:value="formData.password" />
-        </a-form-item>
-
-        <a-form-item label="验证码" name="code" :rules="[{ required: true, message: '请输入验证码!' }]">
-            <a-row class="enter-x">
-                <a-col :span="16">
-                    <a-input
-                        v-model:value="formData.code"
-                        type="text"
-                        placeholder="点击图片更换验证码"
-                        class="vertify_code"
-                        auto-complete="false"
-                        style="font-size: 14px;min-width: 50px"
-                        @keyup.enter.native="handleLogin"
-                      ></a-input>
-                </a-col>
-                <a-col :span="8">
-                    <img :src="codeImgUrl" class="vertify_img" @click="resetImg">
-                </a-col>
-            </a-row>
-        </a-form-item>
-
-        <a-form-item :wrapper-col="{ offset: 6, span: 24 }">
-            <a-button type="primary" style="width: 100%;" html-type="submit">登录</a-button>
-        </a-form-item>
-        <!--加载效果-->
-        <a-spin tip="Logining..." :spinning="spinning"></a-spin>
-    </a-form>
+    <div class="loginPage">
+        <a-card class="login-wrapper">
+            <div class="center-img">
+                <img src="@/assets/images/logo_.png" width="100%" />
+            </div>
+            <a-form :model="formData" name="basic" :label-col="{ span: 5.5 }" :wrapper-col="{ span: 18 }" autocomplete="off"
+                @finish="handleLogin" @finishFailed="onFinishFailed" class="loginForm">
+                <a-form-item label="用户名" name="username" :rules="[{ required: true, message: '请输入用户名!' }]">
+                    <a-input v-model:value="formData.username" style="width: 100%;" />
+                </a-form-item>
+                <a-form-item label="密&nbsp;&nbsp;&nbsp;码" name="password" :rules="[{ required: true, message: '请输入密码!' }]">
+                    <a-input-password v-model:value="formData.password" />
+                </a-form-item>
+        
+                <a-form-item label="验证码" name="code" :rules="[{ required: true, message: '请输入验证码!' }]">
+                    <a-row class="enter-x">
+                        <a-col :span="16">
+                            <a-input
+                                v-model:value="formData.code"
+                                type="text"
+                                placeholder="点击图片更换验证码"
+                                class="vertify_code"
+                                auto-complete="false"
+                                style="font-size: 14px;min-width: 50px"
+                                @keyup.enter.native="handleLogin"
+                              ></a-input>
+                        </a-col>
+                        <a-col :span="8">
+                            <img :src="codeImgUrl" class="vertify_img" @click="resetImg">
+                        </a-col>
+                    </a-row>
+                </a-form-item>
+        
+                <a-form-item :wrapper-col="{ offset: 1, span: 22 }">
+                    <a-button type="primary" size="large" style="width: 100%;margin-top: 20px;" html-type="submit">登录</a-button>
+                </a-form-item>
+                <!--加载效果-->
+                <a-spin tip="Logining..." :spinning="spinning"></a-spin>
+            </a-form>
+        </a-card>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -110,19 +117,38 @@ async function resetImg() {
 }
 </script>
 
-<style>
-.login {
-    position: absolute;
-    top: 50%;
-    right: 10%;
-    transform: translate(-30%, -30%);
-    width: 400px;
-    height: 300px;
+<style scoped>
+:deep(.ant-card-body) {
+    height: 100%;
+    padding: 10px !important;
 }
-</style>
-
-<style lang="scss" scoped>
-// .enter-y {
+.loginPage {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: url('../../assets/images/loginbg.png') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+.login-wrapper {
+    position: absolute;
+    width: 350px;
+    height: 400px;
+    z-index: 1000;
+    right: 5%;
+    top: 35%;
+    background: rgba(255, 255, 255);
+    -webkit-box-shadow: 0px 0px 8px #b6b6b6;
+    box-shadow: 0px 0px 8px #b6b6b6;
+}
+/* .loginForm {
+    position: absolute;
+    right: 15%;
+} */
+.center-img{
+    margin-bottom: 20px;
+}
+/* // .enter-y {
 //     width: 100% !important;
 //     color: white  !important;
 //     .vertify_code {
@@ -134,5 +160,5 @@ async function resetImg() {
 //         bottom: 0;
 //         width: 35%;
 //     }
-// }
+// } */
 </style>
